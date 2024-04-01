@@ -7,5 +7,14 @@ edition = "2021"
 crate-type = ["staticlib"]
 
 [dependencies]
+# for working with C FFI translations to/from go
 libc = "0.2.153"
-serde = "1.0.197"
+
+# for serializing and deserializing JSON
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = "1.0.115"
+
+# for parsing SystemVerilog
+sv-parser = "0.13.3"
+sv-parser-error = "0.13.3"
+sv-parser-syntaxtree = "0.13.3"

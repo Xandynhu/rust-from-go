@@ -4,20 +4,34 @@ package gate
 // #include "bridge.h"
 import "C"
 
-// Add missing import
+/*
+RunSvParser is a wrapper around the Rust function run_sv_parser
 
-func Print(str string) {
+It takes a string in the formof a json object representing a
+sequency of paths as an argument and returns a string in the
+form of a JSON object
+
+Example input:
+
+	{
+		"files": {
+			"include": [
+				"file1",
+				"path/to/file2"
+			],
+			"source": [
+				"file3",
+				"path/to/dir1"
+			]
+		}
+	}
+*/
+func RunSvParser(str string) string {
 	cstr := C.CString(str)
 	defer C.free_string(cstr)
 
-	C.print(cstr)
-}
-
-func ProcessJSON(str string) string {
-	cstr := C.CString(str)
-	defer C.free_string(cstr)
-
-	result := C.process_json(cstr)
+	result := C.run_sv_parser(cstr)
+	defer C.free_string(result)
 
 	return C.GoString(result)
 }
