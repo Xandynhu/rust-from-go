@@ -19,4 +19,15 @@ module top_module(
         .multi_bit_in(multi_bit_in)
     );
 
+    // Instantiate a missing module
+    missing_module missing_module_inst(
+        .clk(clk),
+        .rst_n(rst_n),
+        .data_in(data_in),
+        .data_out(data_out),
+        .bidir_port(bidir_port),
+        .multi_bit_out(multi_bit_out),
+        .multi_bit_in(multi_bit_in)
+    );
+
 endmodule

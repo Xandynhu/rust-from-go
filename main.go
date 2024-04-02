@@ -16,6 +16,23 @@ type Files struct {
 	Source  []string `json:"source"`
 }
 
+type Output struct {
+	Modules Modules `json:"modules"`
+}
+
+type Modules struct {
+	Declarations map[string]ModuleInfo `json:"declarations"`
+	Instances    map[string][]ModuleInfo
+	Exports      map[string]ModuleInfo
+	Missing      map[string][]ModuleInfo
+}
+
+type ModuleInfo struct {
+	Name string `json:"name"`
+	File string `json:"file"`
+	Line int    `json:"line"`
+}
+
 func main() {
 	// Example input
 	input := Input{
@@ -36,8 +53,15 @@ func main() {
 	}
 
 	inputJsonString := string(inputJson)
-	// fmt.Println(inputJsonString)
 
-	gate.RunSvParser(inputJsonString)
-	// fmt.Println(res)
+	outputJsonString := gate.RunSvParser(inputJsonString)
+
+	// Convert output JSON string to Output struct
+	var output Output
+	err = json.Unmarshal([]byte(outputJsonString), &output)
+	if err != nil {
+		fmt.Println("Error unmarshalling output JSON:", err)
+		return
+	}
+
 }
